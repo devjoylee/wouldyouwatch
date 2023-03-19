@@ -1,5 +1,7 @@
-import AppLoading from 'expo-app-loading';
 import React, { useState } from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import AppLoading from 'expo-app-loading';
+import Tabs from './src/navigation/Tabs';
 import { Text } from 'react-native';
 
 export default function App() {
@@ -16,5 +18,9 @@ export default function App() {
   }
 
   // loading done
-  return <Text>We are done loading</Text>;
+  return (
+    <NavigationContainer>
+      <Tabs />
+    </NavigationContainer>
+  );
 }

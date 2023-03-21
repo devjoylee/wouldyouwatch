@@ -4,6 +4,9 @@ import AppLoading from 'expo-app-loading';
 import Tabs from './src/navigation/Tabs';
 import Stack from './src/navigation/Stack';
 import Root from './src/navigation/Root';
+import { useColorScheme } from 'react-native';
+import { darkTheme, lightTheme } from './src/styles/theme';
+import { ThemeProvider } from 'styled-components/native';
 
 export default function App() {
   const [ready, setReady] = useState(false);
@@ -14,16 +17,20 @@ export default function App() {
     // await Font.loadAsync(Ionicons.load);
   };
 
+  const isDark = useColorScheme() === 'dark';
+
   if (!ready) {
     return <AppLoading onFinish={onFinish} onError={console.error} startAsync={startLoading} />;
   }
 
   // loading done
   return (
-    <NavigationContainer>
-      <Root />
-      {/* <Tabs /> */}
-      {/* <Stack /> */}
-    </NavigationContainer>
+    <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
+      <NavigationContainer>
+        <Root />
+        {/* <Tabs /> */}
+        {/* <Stack /> */}
+      </NavigationContainer>
+    </ThemeProvider>
   );
 }

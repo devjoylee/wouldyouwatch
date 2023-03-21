@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import AppLoading from 'expo-app-loading';
 import Tabs from './src/navigation/Tabs';
-import { Text } from 'react-native';
+import Stack from './src/navigation/Stack';
+import Root from './src/navigation/Root';
 
 export default function App() {
   const [ready, setReady] = useState(false);
@@ -20,7 +21,9 @@ export default function App() {
   // loading done
   return (
     <NavigationContainer>
-      <Tabs />
+      <Root />
+      {/* <Tabs /> */}
+      {/* <Stack /> */}
     </NavigationContainer>
   );
 }

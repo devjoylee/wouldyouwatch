@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
+import { useColorScheme } from 'react-native';
+
 import { NavigationContainer } from '@react-navigation/native';
 import AppLoading from 'expo-app-loading';
-import Tabs from './src/navigation/Tabs';
-import Stack from './src/navigation/Stack';
-import Root from './src/navigation/Root';
-import { useColorScheme } from 'react-native';
-import { darkTheme, lightTheme } from './src/styles/theme';
+import Root from '@components/navigation/Root';
+
+import { darkTheme, lightTheme } from '@styles/theme';
 import { ThemeProvider } from 'styled-components/native';
 
 export default function App() {
@@ -28,8 +28,6 @@ export default function App() {
     <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
       <NavigationContainer>
         <Root />
-        {/* <Tabs /> */}
-        {/* <Stack /> */}
       </NavigationContainer>
     </ThemeProvider>
   );

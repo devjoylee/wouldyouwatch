@@ -1,6 +1,13 @@
 {
   "extends": "@tsconfig/react-native/tsconfig.json",
   "compilerOptions": {
-    "types": ["jest", "@types/styled-components-react-native"]
-  }
+    "types": ["jest", "@types/styled-components-react-native"],
+    "baseUrl": "./src",
+    "typeRoots": ["src/types"],
+    "paths": {
+      "@components/*": ["components/*"],
+      "@styles/*": ["styles/*"]
+    }
+  },
+  "include": ["src"]
 }

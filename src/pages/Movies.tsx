@@ -5,6 +5,7 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import Swiper from 'react-native-swiper';
 import styled from 'styled-components/native';
 import Slide from '@components/Slide';
+import HorizonMovies from '@components/HorizonMovies';
 
 const { height: SCREEN_HEIGHT } = Dimensions.get('window');
 const API_KEY = '10923b261ba94d897ac6b81148314a3f';
@@ -12,6 +13,7 @@ const API_KEY = '10923b261ba94d897ac6b81148314a3f';
 const Movies: React.FC<NativeStackScreenProps<any, 'Movies'>> = () => {
   const [loading, setLoading] = useState(true);
   const [nowPlaying, setNowPlaying] = useState([]);
+  const [trending, setTrending] = useState([]);
 
   const getNowPlaying = async () => {
     const { results } = await (
@@ -20,11 +22,24 @@ const Movies: React.FC<NativeStackScreenProps<any, 'Movies'>> = () => {
       )
     ).json();
     setNowPlaying(results);
+  };
+
+  const getTrending = async () => {
+    const { results } = await (
+      await fetch(`https://api.themoviedb.org/3/trending/movie/week?api_key=${API_KEY}`)
+    ).json();
+    setTrending(results);
+  };
+
+  const getUpcoming = async () => {};
+
+  const getMovieData = async () => {
+    await Promise.all([getNowPlaying(), getTrending(), getUpcoming()]);
     setLoading(false);
   };
 
   useEffect(() => {
-    getNowPlaying();
+    getMovieData();
   }, []);
 
   return loading ? (
@@ -52,6 +67,8 @@ const Movies: React.FC<NativeStackScreenProps<any, 'Movies'>> = () => {
           />
         ))}
       </Swiper>
+      <SectionTitle>Trending Movies</SectionTitle>
+      <HorizonMovies movies={trending} />
     </Container>
   );
 };
@@ -64,6 +81,13 @@ const Loader = styled.View`
   flex: 1;
   justify-content: center;
   align-items: center;
+`;
+
+const SectionTitle = styled.Text`
+  color: white;
+  font-size: 17px;
+  font-weight: 600;
+  margin: 25px;
 `;
 
 export default Movies;

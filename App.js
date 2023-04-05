@@ -3,7 +3,7 @@ import { useColorScheme } from 'react-native';
 
 import { NavigationContainer } from '@react-navigation/native';
 import AppLoading from 'expo-app-loading';
-import Root from '@components/navigation/Root';
+import Root from '@components/Navigation/Root';
 
 import { darkTheme, lightTheme } from '@styles/theme';
 import { ThemeProvider } from 'styled-components/native';

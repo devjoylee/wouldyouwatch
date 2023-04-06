@@ -2,36 +2,31 @@ import React from 'react';
 import { StyleSheet, useColorScheme, View } from 'react-native';
 
 import Poster from '@components/Poster';
+import Votes from '@components/Votes';
 import { makeImagePath } from '@utils/makeImagePath';
 import { BlurView } from 'expo-blur';
 import * as S from './styles';
 
-interface SlideProps {
-  backdropPath: string;
-  posterPath: string;
-  originalTitle: string;
-  voteAverage: number;
-  overview: string;
+interface Props {
+  movie: MediaType;
 }
 
-const Slide: React.FC<SlideProps> = ({
-  backdropPath,
-  posterPath,
-  originalTitle,
-  voteAverage,
-  overview,
-}) => {
+const Slide: React.FC<Props> = ({ movie }) => {
+  const { backdrop_path, poster_path, original_title, vote_average, overview } = movie;
   const isDark = useColorScheme() === 'dark';
 
   return (
     <View style={{ flex: 1 }}>
-      <S.Background style={StyleSheet.absoluteFill} source={{ uri: makeImagePath(backdropPath) }} />
+      <S.Background
+        style={StyleSheet.absoluteFill}
+        source={{ uri: makeImagePath(backdrop_path) }}
+      />
       <BlurView tint={isDark ? 'dark' : 'light'} intensity={85}>
         <S.MovieItem>
-          <Poster path={posterPath} />
+          <Poster path={poster_path} />
           <S.TextWrap>
-            <S.Title isDark={isDark}>{originalTitle}</S.Title>
-            <S.Votes isDark={isDark}>⭐️ {voteAverage}/10</S.Votes>
+            <S.Title isDark={isDark}>{original_title}</S.Title>
+            <Votes votes={vote_average} />
             <S.Description isDark={isDark}>{overview.slice(0, 80)}...</S.Description>
           </S.TextWrap>
         </S.MovieItem>

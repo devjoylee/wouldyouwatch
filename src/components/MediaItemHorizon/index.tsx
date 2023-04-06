@@ -4,7 +4,7 @@ import Votes from '@components/Votes';
 import * as S from './styles';
 
 interface Props {
-  movie: MediaType;
+  movie: MovieType;
 }
 
 const MediaItemHorizon: React.FC<Props> = ({ movie }) => {
@@ -12,7 +12,7 @@ const MediaItemHorizon: React.FC<Props> = ({ movie }) => {
 
   return (
     <S.ItemContainer>
-      <Poster path={poster_path} />
+      <Poster path={poster_path || ''} />
       <S.Title>
         {original_title.slice(0, 12)}
         {original_title.length > 12 ? '...' : null}

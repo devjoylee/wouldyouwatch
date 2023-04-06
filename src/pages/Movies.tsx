@@ -20,21 +20,21 @@ const Movies: React.FC<NativeStackScreenProps<any, 'Movies'>> = () => {
     isLoading: nowPlayingLoading,
     data: nowPlayingData,
     isRefetching: isRefetchingNowPlaying,
-  } = useQuery(['movies', 'nowPlaying'], movieAPI.nowPlaying);
+  } = useQuery<MovieResponse>(['movies', 'nowPlaying'], movieAPI.nowPlaying);
 
   const {
     isLoading: upcomingLoading,
     data: upcomingData,
     isRefetching: isRefetchingUpcoming,
-  } = useQuery(['movies', 'upcoming'], movieAPI.nowPlaying);
+  } = useQuery<MovieResponse>(['movies', 'upcoming'], movieAPI.nowPlaying);
 
   const {
     isLoading: trendingLoading,
     data: trendingData,
     isRefetching: isRefetchingTrending,
-  } = useQuery(['movies', 'trending'], movieAPI.nowPlaying);
+  } = useQuery<MovieResponse>(['movies', 'trending'], movieAPI.nowPlaying);
 
-  const movieKeyExtractor = (item: MediaType) => item.id + '';
+  const movieKeyExtractor = (item: MovieType) => item.id + '';
 
   const onRefresh = () => {
     queryClient.refetchQueries(['movies']);
@@ -51,7 +51,7 @@ const Movies: React.FC<NativeStackScreenProps<any, 'Movies'>> = () => {
     <FlatList
       onRefresh={onRefresh}
       refreshing={isRefetching}
-      data={upcomingData.results}
+      data={upcomingData?.results}
       keyExtractor={movieKeyExtractor}
       renderItem={({ item }) => <MediaItemVertical movie={item} />}
       ItemSeparatorComponent={VSeparator}
@@ -65,7 +65,7 @@ const Movies: React.FC<NativeStackScreenProps<any, 'Movies'>> = () => {
             showsPagination={false}
             containerStyle={{ width: '100%', height: SCREEN_HEIGHT / 4 }}
           >
-            {nowPlayingData.results.map((movie: MediaType) => (
+            {nowPlayingData?.results.map((movie: MovieType) => (
               <Slide key={movie.id} movie={movie} />
             ))}
           </Swiper>
@@ -73,7 +73,7 @@ const Movies: React.FC<NativeStackScreenProps<any, 'Movies'>> = () => {
             <SectionTitle>Trending Movies</SectionTitle>
             <FlatList
               horizontal
-              data={trendingData.results}
+              data={trendingData?.results}
               keyExtractor={movieKeyExtractor}
               contentContainerStyle={{ paddingLeft: 25 }}
               showsHorizontalScrollIndicator={false}

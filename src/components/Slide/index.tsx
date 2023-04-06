@@ -8,7 +8,7 @@ import { BlurView } from 'expo-blur';
 import * as S from './styles';
 
 interface Props {
-  movie: MediaType;
+  movie: MovieType;
 }
 
 const Slide: React.FC<Props> = ({ movie }) => {
@@ -19,11 +19,11 @@ const Slide: React.FC<Props> = ({ movie }) => {
     <View style={{ flex: 1 }}>
       <S.Background
         style={StyleSheet.absoluteFill}
-        source={{ uri: makeImagePath(backdrop_path) }}
+        source={{ uri: makeImagePath(backdrop_path || '') }}
       />
       <BlurView tint={isDark ? 'dark' : 'light'} intensity={85}>
         <S.MovieItem>
-          <Poster path={poster_path} />
+          <Poster path={poster_path || ''} />
           <S.TextWrap>
             <S.Title isDark={isDark}>{original_title}</S.Title>
             <Votes votes={vote_average} />

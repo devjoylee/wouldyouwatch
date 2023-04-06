@@ -3,7 +3,7 @@ import Poster from '@components/Poster';
 import * as S from './styles';
 
 interface Props {
-  movie: MediaType;
+  movie: MovieType;
 }
 
 const MediaItemVertical: React.FC<Props> = ({ movie }) => {
@@ -11,7 +11,7 @@ const MediaItemVertical: React.FC<Props> = ({ movie }) => {
 
   return (
     <S.ItemContainer>
-      <Poster path={poster_path} />
+      <Poster path={poster_path || ''} />
       <S.Details>
         <S.Title>{original_title}</S.Title>
         <S.Release>

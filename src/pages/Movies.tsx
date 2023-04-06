@@ -1,73 +1,58 @@
-import React, { useEffect, useState } from 'react';
-import { ActivityIndicator, Dimensions, FlatList, View } from 'react-native';
+import React from 'react';
+import { ActivityIndicator, Dimensions, FlatList } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { useQuery, useQueryClient } from 'react-query';
 
 import Swiper from 'react-native-swiper';
-import styled from 'styled-components/native';
 import Slide from '@components/Slide';
 import MediaItemHorizon from '@components/MediaItemHorizon';
 import MediaItemVertical from '@components/MediaItemVertical';
 
+import { movieAPI } from '@utils/api';
+import styled from 'styled-components/native';
+
 const { height: SCREEN_HEIGHT } = Dimensions.get('window');
-const API_KEY = '10923b261ba94d897ac6b81148314a3f';
 
 const Movies: React.FC<NativeStackScreenProps<any, 'Movies'>> = () => {
-  const [refreshing, setRefreshing] = useState(false);
-  const [loading, setLoading] = useState(true);
-  const [nowPlaying, setNowPlaying] = useState<MediaType[]>([]);
-  const [trending, setTrending] = useState<MediaType[]>([]);
-  const [upcoming, setUpcoming] = useState<MediaType[]>([]);
+  const queryClient = useQueryClient();
 
-  const getNowPlaying = async () => {
-    const { results } = await (
-      await fetch(
-        `https://api.themoviedb.org/3/movie/now_playing?api_key=${API_KEY}&language=en-US&page=1&region=ca`
-      )
-    ).json();
-    setNowPlaying(results);
+  const {
+    isLoading: nowPlayingLoading,
+    data: nowPlayingData,
+    isRefetching: isRefetchingNowPlaying,
+  } = useQuery(['movies', 'nowPlaying'], movieAPI.nowPlaying);
+
+  const {
+    isLoading: upcomingLoading,
+    data: upcomingData,
+    isRefetching: isRefetchingUpcoming,
+  } = useQuery(['movies', 'upcoming'], movieAPI.nowPlaying);
+
+  const {
+    isLoading: trendingLoading,
+    data: trendingData,
+    isRefetching: isRefetchingTrending,
+  } = useQuery(['movies', 'trending'], movieAPI.nowPlaying);
+
+  const movieKeyExtractor = (item: MediaType) => item.id + '';
+
+  const onRefresh = () => {
+    queryClient.refetchQueries(['movies']);
   };
 
-  const getTrending = async () => {
-    const { results } = await (
-      await fetch(`https://api.themoviedb.org/3/trending/movie/week?api_key=${API_KEY}`)
-    ).json();
-    setTrending(results);
-  };
+  const isLoading = nowPlayingLoading || upcomingLoading || trendingLoading;
+  const isRefetching = isRefetchingNowPlaying || isRefetchingUpcoming || isRefetchingTrending;
 
-  const getUpcoming = async () => {
-    const { results } = await (
-      await fetch(
-        `https://api.themoviedb.org/3/movie/upcoming?api_key=${API_KEY}&language=en-US&page=1`
-      )
-    ).json();
-    setUpcoming(results);
-  };
-
-  const getMovieData = async () => {
-    await Promise.all([getNowPlaying(), getTrending(), getUpcoming()]);
-    setLoading(false);
-  };
-
-  const onRefresh = async () => {
-    setRefreshing(true);
-    await getMovieData();
-    setRefreshing(false);
-  };
-
-  useEffect(() => {
-    getMovieData();
-  }, []);
-
-  return loading ? (
+  return isLoading ? (
     <Loader>
       <ActivityIndicator size='large' />
     </Loader>
   ) : (
     <FlatList
       onRefresh={onRefresh}
-      refreshing={refreshing}
-      data={upcoming}
-      keyExtractor={(item) => item.id + ''}
+      refreshing={isRefetching}
+      data={upcomingData.results}
+      keyExtractor={movieKeyExtractor}
       renderItem={({ item }) => <MediaItemVertical movie={item} />}
       ItemSeparatorComponent={VSeparator}
       ListHeaderComponent={
@@ -80,7 +65,7 @@ const Movies: React.FC<NativeStackScreenProps<any, 'Movies'>> = () => {
             showsPagination={false}
             containerStyle={{ width: '100%', height: SCREEN_HEIGHT / 4 }}
           >
-            {nowPlaying.map((movie) => (
+            {nowPlayingData.results.map((movie: MediaType) => (
               <Slide key={movie.id} movie={movie} />
             ))}
           </Swiper>
@@ -88,8 +73,8 @@ const Movies: React.FC<NativeStackScreenProps<any, 'Movies'>> = () => {
             <SectionTitle>Trending Movies</SectionTitle>
             <FlatList
               horizontal
-              data={trending}
-              keyExtractor={(item) => item.id + ''}
+              data={trendingData.results}
+              keyExtractor={movieKeyExtractor}
               contentContainerStyle={{ paddingLeft: 25 }}
               showsHorizontalScrollIndicator={false}
               renderItem={({ item }) => <MediaItemHorizon movie={item} />}

@@ -6,6 +6,7 @@ import Swiper from 'react-native-swiper';
 import styled from 'styled-components/native';
 import Slide from '@components/Slide';
 import HorizonMovies from '@components/HorizonMovies';
+import Preview from '@components/Preview';
 
 const { height: SCREEN_HEIGHT } = Dimensions.get('window');
 const API_KEY = '10923b261ba94d897ac6b81148314a3f';
@@ -14,6 +15,7 @@ const Movies: React.FC<NativeStackScreenProps<any, 'Movies'>> = () => {
   const [loading, setLoading] = useState(true);
   const [nowPlaying, setNowPlaying] = useState([]);
   const [trending, setTrending] = useState([]);
+  const [upcoming, setUpcoming] = useState([]);
 
   const getNowPlaying = async () => {
     const { results } = await (
@@ -31,7 +33,14 @@ const Movies: React.FC<NativeStackScreenProps<any, 'Movies'>> = () => {
     setTrending(results);
   };
 
-  const getUpcoming = async () => {};
+  const getUpcoming = async () => {
+    const { results } = await (
+      await fetch(
+        `https://api.themoviedb.org/3/movie/upcoming?api_key=${API_KEY}&language=en-US&page=1`
+      )
+    ).json();
+    setUpcoming(results);
+  };
 
   const getMovieData = async () => {
     await Promise.all([getNowPlaying(), getTrending(), getUpcoming()]);
@@ -67,8 +76,16 @@ const Movies: React.FC<NativeStackScreenProps<any, 'Movies'>> = () => {
           />
         ))}
       </Swiper>
-      <SectionTitle>Trending Movies</SectionTitle>
-      <HorizonMovies movies={trending} />
+      <Section>
+        <SectionTitle>Trending Movies</SectionTitle>
+        <HorizonMovies movies={trending} />
+      </Section>
+      <Section>
+        <SectionTitle>Coming Soon</SectionTitle>
+        {upcoming?.map((movie) => (
+          <Preview key={movie.id} movie={movie} />
+        ))}
+      </Section>
     </Container>
   );
 };
@@ -82,6 +99,8 @@ const Loader = styled.View`
   justify-content: center;
   align-items: center;
 `;
+
+const Section = styled.View``;
 
 const SectionTitle = styled.Text`
   color: white;

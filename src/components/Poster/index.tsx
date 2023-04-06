@@ -14,6 +14,7 @@ export const PosterContainer = styled.Image`
   width: 90px;
   height: 125px;
   border-radius: 5px;
+  background-color: rgba(255, 255, 255, 0.5);
 `;
 
 export default Poster;

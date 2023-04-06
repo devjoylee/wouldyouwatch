@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { ActivityIndicator, Dimensions, ScrollView, RefreshControl } from 'react-native';
+import { ActivityIndicator, Dimensions, FlatList, View } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 import Swiper from 'react-native-swiper';
@@ -63,44 +63,45 @@ const Movies: React.FC<NativeStackScreenProps<any, 'Movies'>> = () => {
       <ActivityIndicator size='large' />
     </Loader>
   ) : (
-    <Container refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
-      <Swiper
-        loop
-        horizontal
-        autoplay
-        showsButtons={false}
-        showsPagination={false}
-        containerStyle={{ width: '100%', height: SCREEN_HEIGHT / 4 }}
-      >
-        {nowPlaying.map((movie) => (
-          <Slide key={movie.id} movie={movie} />
-        ))}
-      </Swiper>
-      <Section>
-        <SectionTitle>Trending Movies</SectionTitle>
-        <ScrollView
-          contentContainerStyle={{ paddingLeft: 25 }}
-          horizontal
-          showsHorizontalScrollIndicator={false}
-        >
-          {trending?.map((movie) => (
-            <MediaItemHorizon key={movie.id} movie={movie} />
-          ))}
-        </ScrollView>
-      </Section>
-      <Section>
-        <SectionTitle>Coming Soon</SectionTitle>
-        {upcoming?.map((movie) => (
-          <MediaItemVertical key={movie.id} movie={movie} />
-        ))}
-      </Section>
-    </Container>
+    <FlatList
+      onRefresh={onRefresh}
+      refreshing={refreshing}
+      data={upcoming}
+      keyExtractor={(item) => item.id + ''}
+      renderItem={({ item }) => <MediaItemVertical movie={item} />}
+      ItemSeparatorComponent={VSeparator}
+      ListHeaderComponent={
+        <>
+          <Swiper
+            loop
+            horizontal
+            autoplay
+            showsButtons={false}
+            showsPagination={false}
+            containerStyle={{ width: '100%', height: SCREEN_HEIGHT / 4 }}
+          >
+            {nowPlaying.map((movie) => (
+              <Slide key={movie.id} movie={movie} />
+            ))}
+          </Swiper>
+          <Section>
+            <SectionTitle>Trending Movies</SectionTitle>
+            <FlatList
+              horizontal
+              data={trending}
+              keyExtractor={(item) => item.id + ''}
+              contentContainerStyle={{ paddingLeft: 25 }}
+              showsHorizontalScrollIndicator={false}
+              renderItem={({ item }) => <MediaItemHorizon movie={item} />}
+              ItemSeparatorComponent={HSeparator}
+            />
+          </Section>
+          <SectionTitle>Coming Soon</SectionTitle>
+        </>
+      }
+    />
   );
 };
-
-const Container = styled.ScrollView`
-  background-color: ${({ theme }) => theme.bg};
-`;
 
 const Loader = styled.View`
   flex: 1;
@@ -115,6 +116,14 @@ const SectionTitle = styled.Text`
   font-size: 17px;
   font-weight: 600;
   margin: 25px;
+`;
+
+const VSeparator = styled.View`
+  height: 20px;
+`;
+
+const HSeparator = styled.View`
+  width: 10px;
 `;
 
 export default Movies;

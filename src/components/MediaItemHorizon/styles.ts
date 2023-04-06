@@ -1,7 +1,6 @@
 import styled from 'styled-components/native';
 
 export const ItemContainer = styled.View`
-  margin-right: 10px;
   align-items: center;
 `;
 

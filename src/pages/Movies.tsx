@@ -5,8 +5,8 @@ import { useQuery, useQueryClient } from 'react-query';
 
 import Swiper from 'react-native-swiper';
 import Slide from '@components/Slide';
-import MediaItemHorizon from '@components/MediaItemHorizon';
 import MediaItemVertical from '@components/MediaItemVertical';
+import MediaListHorizon from '@components/MediaListHorizon';
 
 import { movieAPI } from '@utils/api';
 import styled from 'styled-components/native';
@@ -54,7 +54,6 @@ const Movies: React.FC<NativeStackScreenProps<any, 'Movies'>> = () => {
       data={upcomingData?.results}
       keyExtractor={movieKeyExtractor}
       renderItem={({ item }) => <MediaItemVertical movie={item} />}
-      ItemSeparatorComponent={VSeparator}
       ListHeaderComponent={
         <>
           <Swiper
@@ -63,24 +62,13 @@ const Movies: React.FC<NativeStackScreenProps<any, 'Movies'>> = () => {
             autoplay
             showsButtons={false}
             showsPagination={false}
-            containerStyle={{ width: '100%', height: SCREEN_HEIGHT / 4 }}
+            containerStyle={{ width: '100%', height: SCREEN_HEIGHT / 3.8 }}
           >
             {nowPlayingData?.results.map((movie: MovieType) => (
               <Slide key={movie.id} movie={movie} />
             ))}
           </Swiper>
-          <Section>
-            <SectionTitle>Trending Movies</SectionTitle>
-            <FlatList
-              horizontal
-              data={trendingData?.results}
-              keyExtractor={movieKeyExtractor}
-              contentContainerStyle={{ paddingLeft: 25 }}
-              showsHorizontalScrollIndicator={false}
-              renderItem={({ item }) => <MediaItemHorizon movie={item} />}
-              ItemSeparatorComponent={HSeparator}
-            />
-          </Section>
+          {trendingData && <MediaListHorizon title='Trending Movies' data={trendingData.results} />}
           <SectionTitle>Coming Soon</SectionTitle>
         </>
       }
@@ -94,21 +82,12 @@ const Loader = styled.View`
   align-items: center;
 `;
 
-const Section = styled.View``;
-
 const SectionTitle = styled.Text`
   color: white;
   font-size: 17px;
   font-weight: 600;
-  margin: 25px;
-`;
-
-const VSeparator = styled.View`
-  height: 20px;
-`;
-
-const HSeparator = styled.View`
-  width: 10px;
+  margin-bottom: 20px;
+  margin-left: 25px;
 `;
 
 export default Movies;

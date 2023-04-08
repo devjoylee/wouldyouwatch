@@ -25,9 +25,13 @@ const Slide: React.FC<Props> = ({ movie }) => {
         <S.MovieItem>
           <Poster path={poster_path || ''} />
           <S.TextWrap>
-            <S.Title isDark={isDark}>{original_title}</S.Title>
+            <S.Title isDark={isDark} numberOfLines={2}>
+              {original_title}
+            </S.Title>
             <Votes votes={vote_average} />
-            <S.Description isDark={isDark}>{overview.slice(0, 80)}...</S.Description>
+            <S.Description isDark={isDark} numberOfLines={4}>
+              {overview}...
+            </S.Description>
           </S.TextWrap>
         </S.MovieItem>
       </BlurView>

@@ -13,7 +13,7 @@ const MediaItemVertical: React.FC<Props> = ({ movie }) => {
     <S.ItemContainer>
       <Poster path={poster_path || ''} />
       <S.Details>
-        <S.Title>{original_title}</S.Title>
+        <S.Title numberOfLines={1}>{original_title}</S.Title>
         <S.Release>
           {new Date(release_date).toLocaleDateString('ko', {
             month: 'long',
@@ -21,9 +21,7 @@ const MediaItemVertical: React.FC<Props> = ({ movie }) => {
             year: 'numeric',
           })}
         </S.Release>
-        <S.Overview>
-          {overview !== '' && overview.length > 80 ? `${overview.slice(0, 120)}...` : overview}
-        </S.Overview>
+        <S.Overview numberOfLines={5}>{overview}</S.Overview>
       </S.Details>
     </S.ItemContainer>
   );

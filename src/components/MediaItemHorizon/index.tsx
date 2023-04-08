@@ -13,10 +13,7 @@ const MediaItemHorizon: React.FC<Props> = ({ movie }) => {
   return (
     <S.ItemContainer>
       <Poster path={poster_path || ''} />
-      <S.Title>
-        {original_title.slice(0, 12)}
-        {original_title.length > 12 ? '...' : null}
-      </S.Title>
+      <S.Title numberOfLines={1}>{original_title}</S.Title>
       <Votes votes={vote_average} />
     </S.ItemContainer>
   );

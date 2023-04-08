@@ -11,8 +11,8 @@ const Poster: React.FC<PosterProps> = ({ path }) => {
 };
 
 export const PosterContainer = styled.Image`
-  width: 90px;
-  height: 125px;
+  width: 100px;
+  height: 140px;
   border-radius: 5px;
   background-color: rgba(255, 255, 255, 0.5);
 `;

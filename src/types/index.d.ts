@@ -7,7 +7,7 @@ interface BaseResponse {
 }
 
 interface MovieResponse extends BaseResponse {
-  results: Movie[];
+  results: MovieType[];
 }
 
 interface MovieType {

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { RefreshControl, ScrollView } from 'react-native';
 import { QueryClient, useQuery } from 'react-query';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
@@ -8,36 +8,37 @@ import MediaListHorizon from '@components/MediaListHorizon';
 import { tvAPI } from '@utils/api';
 
 const TV: React.FC<NativeStackScreenProps<any, 'TV'>> = () => {
+  const [refreshing, setRefreshing] = useState(false);
   const queryClient = new QueryClient();
 
-  const {
-    isLoading: trendingLoading,
-    isRefetching: trendingRefetching,
-    data: trendingData,
-  } = useQuery(['tv', 'trending'], tvAPI.trending);
+  const { isLoading: trendingLoading, data: trendingData } = useQuery(
+    ['tv', 'trending'],
+    tvAPI.trending
+  );
 
-  const {
-    isLoading: airingLoading,
-    isRefetching: airingRefetching,
-    data: airingData,
-  } = useQuery(['tv', 'airingToday'], tvAPI.airingToday);
+  const { isLoading: airingLoading, data: airingData } = useQuery(
+    ['tv', 'airingToday'],
+    tvAPI.airingToday
+  );
 
-  const {
-    isLoading: topRatedLoading,
-    isRefetching: topRatedRefetching,
-    data: topRatedData,
-  } = useQuery(['tv', 'topRated'], tvAPI.topRated);
+  const { isLoading: topRatedLoading, data: topRatedData } = useQuery(
+    ['tv', 'topRated'],
+    tvAPI.topRated
+  );
 
-  const onRefresh = () => queryClient.refetchQueries(['tv']);
+  const onRefresh = async () => {
+    setRefreshing(true);
+    await queryClient.refetchQueries(['tv']);
+    setRefreshing(false);
+  };
 
   const isLoading = airingLoading || topRatedLoading || trendingLoading;
-  const isRefetching = trendingRefetching || airingRefetching || topRatedRefetching;
 
   if (isLoading) return <Loader />;
 
   return (
     <ScrollView
-      refreshControl={<RefreshControl refreshing={isRefetching} onRefresh={onRefresh} />}
+      refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
       contentContainerStyle={{ paddingVertical: 0 }}
     >
       <MediaListHorizon title='Trending TV series' data={trendingData?.results} />

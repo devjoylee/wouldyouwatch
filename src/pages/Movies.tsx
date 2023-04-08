@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Dimensions, FlatList } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useQuery, useQueryClient } from 'react-query';
@@ -15,39 +15,40 @@ import styled from 'styled-components/native';
 const { height: SCREEN_HEIGHT } = Dimensions.get('window');
 
 const Movies: React.FC<NativeStackScreenProps<any, 'Movies'>> = () => {
+  const [refreshing, setRefreshing] = useState(false);
   const queryClient = useQueryClient();
 
-  const {
-    isLoading: nowPlayingLoading,
-    data: nowPlayingData,
-    isRefetching: nowPlayingRefetching,
-  } = useQuery<MovieResponse>(['movies', 'nowPlaying'], movieAPI.nowPlaying);
+  const { isLoading: nowPlayingLoading, data: nowPlayingData } = useQuery<MovieResponse>(
+    ['movies', 'nowPlaying'],
+    movieAPI.nowPlaying
+  );
 
-  const {
-    isLoading: upcomingLoading,
-    data: upcomingData,
-    isRefetching: upcomingRefetching,
-  } = useQuery<MovieResponse>(['movies', 'upcoming'], movieAPI.upcoming);
+  const { isLoading: upcomingLoading, data: upcomingData } = useQuery<MovieResponse>(
+    ['movies', 'upcoming'],
+    movieAPI.upcoming
+  );
 
-  const {
-    isLoading: trendingLoading,
-    data: trendingData,
-    isRefetching: trendingRefetching,
-  } = useQuery<MovieResponse>(['movies', 'trending'], movieAPI.trending);
+  const { isLoading: trendingLoading, data: trendingData } = useQuery<MovieResponse>(
+    ['movies', 'trending'],
+    movieAPI.trending
+  );
 
   const movieKeyExtractor = (item: MovieType) => item.id + '';
 
-  const onRefresh = () => queryClient.refetchQueries(['movies']);
+  const onRefresh = async () => {
+    setRefreshing(true);
+    await queryClient.refetchQueries(['movies']);
+    setRefreshing(false);
+  };
 
   const isLoading = nowPlayingLoading || upcomingLoading || trendingLoading;
-  const isRefetching = nowPlayingRefetching || upcomingRefetching || trendingRefetching;
 
   if (isLoading) return <Loader />;
 
   return (
     <FlatList
       onRefresh={onRefresh}
-      refreshing={isRefetching}
+      refreshing={refreshing}
       data={upcomingData?.results}
       keyExtractor={movieKeyExtractor}
       renderItem={({ item }) => <MediaItemVertical movie={item} />}

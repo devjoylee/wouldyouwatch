@@ -1,10 +1,11 @@
 import React from 'react';
-import { ActivityIndicator, Dimensions, FlatList } from 'react-native';
+import { Dimensions, FlatList } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useQuery, useQueryClient } from 'react-query';
 
 import Swiper from 'react-native-swiper';
 import Slide from '@components/Slide';
+import Loader from '@components/Loader';
 import MediaItemVertical from '@components/MediaItemVertical';
 import MediaListHorizon from '@components/MediaListHorizon';
 
@@ -19,35 +20,31 @@ const Movies: React.FC<NativeStackScreenProps<any, 'Movies'>> = () => {
   const {
     isLoading: nowPlayingLoading,
     data: nowPlayingData,
-    isRefetching: isRefetchingNowPlaying,
+    isRefetching: nowPlayingRefetching,
   } = useQuery<MovieResponse>(['movies', 'nowPlaying'], movieAPI.nowPlaying);
 
   const {
     isLoading: upcomingLoading,
     data: upcomingData,
-    isRefetching: isRefetchingUpcoming,
-  } = useQuery<MovieResponse>(['movies', 'upcoming'], movieAPI.nowPlaying);
+    isRefetching: upcomingRefetching,
+  } = useQuery<MovieResponse>(['movies', 'upcoming'], movieAPI.upcoming);
 
   const {
     isLoading: trendingLoading,
     data: trendingData,
-    isRefetching: isRefetchingTrending,
-  } = useQuery<MovieResponse>(['movies', 'trending'], movieAPI.nowPlaying);
+    isRefetching: trendingRefetching,
+  } = useQuery<MovieResponse>(['movies', 'trending'], movieAPI.trending);
 
   const movieKeyExtractor = (item: MovieType) => item.id + '';
 
-  const onRefresh = () => {
-    queryClient.refetchQueries(['movies']);
-  };
+  const onRefresh = () => queryClient.refetchQueries(['movies']);
 
   const isLoading = nowPlayingLoading || upcomingLoading || trendingLoading;
-  const isRefetching = isRefetchingNowPlaying || isRefetchingUpcoming || isRefetchingTrending;
+  const isRefetching = nowPlayingRefetching || upcomingRefetching || trendingRefetching;
 
-  return isLoading ? (
-    <Loader>
-      <ActivityIndicator size='large' />
-    </Loader>
-  ) : (
+  if (isLoading) return <Loader />;
+
+  return (
     <FlatList
       onRefresh={onRefresh}
       refreshing={isRefetching}
@@ -68,7 +65,13 @@ const Movies: React.FC<NativeStackScreenProps<any, 'Movies'>> = () => {
               <Slide key={movie.id} movie={movie} />
             ))}
           </Swiper>
-          {trendingData && <MediaListHorizon title='Trending Movies' data={trendingData.results} />}
+          {trendingData && (
+            <MediaListHorizon
+              title='Trending Movies'
+              data={trendingData.results}
+              marginBottom={30}
+            />
+          )}
           <SectionTitle>Coming Soon</SectionTitle>
         </>
       }
@@ -76,17 +79,11 @@ const Movies: React.FC<NativeStackScreenProps<any, 'Movies'>> = () => {
   );
 };
 
-const Loader = styled.View`
-  flex: 1;
-  justify-content: center;
-  align-items: center;
-`;
-
 const SectionTitle = styled.Text`
   color: white;
   font-size: 17px;
   font-weight: 600;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
   margin-left: 25px;
 `;
 

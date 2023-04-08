@@ -8,12 +8,12 @@ interface Props {
 }
 
 const MediaItemHorizon: React.FC<Props> = ({ movie }) => {
-  const { poster_path, original_title, vote_average } = movie;
+  const { poster_path, original_title, original_name, vote_average } = movie;
 
   return (
     <S.ItemContainer>
       <Poster path={poster_path || ''} />
-      <S.Title numberOfLines={1}>{original_title}</S.Title>
+      <S.Title numberOfLines={1}>{original_title ?? original_name}</S.Title>
       <Votes votes={vote_average} />
     </S.ItemContainer>
   );

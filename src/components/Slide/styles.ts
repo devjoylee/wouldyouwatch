@@ -1,5 +1,9 @@
 import styled from 'styled-components/native';
 
+export const SlideContainer = styled.View`
+  flex: 1;
+`;
+
 export const Background = styled.Image`
   width: 100%;
   height: 100%;

@@ -21,6 +21,7 @@ module.exports = {
           '@components': './src/components',
           '@styles': './src/styles',
           '@utils': './src/utils',
+          '@pages': './src/pages',
         },
       },
     ],

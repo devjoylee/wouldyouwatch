@@ -7,10 +7,14 @@ interface BaseResponse {
 }
 
 interface MovieResponse extends BaseResponse {
-  results: MovieType[];
+  results: Movie[];
 }
 
-interface MovieType {
+interface TvResponse extends BaseResponse {
+  results: TV[];
+}
+
+interface Movie {
   adult: boolean;
   backdrop_path: string | null;
   genre_ids: number[];
@@ -26,4 +30,22 @@ interface MovieType {
   video: boolean;
   vote_average: number;
   vote_count: number;
+}
+
+interface TV {
+  name: string;
+  original_title: string;
+  original_name: string;
+  origin_country: string[];
+  vote_count: number;
+  backdrop_path: string | null;
+  vote_average: number;
+  genre_ids: number[];
+  id: number;
+  original_language: string;
+  overview: string;
+  poster_path: string | null;
+  first_air_date: string;
+  popularity: number;
+  media_type: string;
 }

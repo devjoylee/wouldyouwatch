@@ -9,7 +9,7 @@ import { BlurView } from 'expo-blur';
 import * as S from './styles';
 
 interface Props {
-  movie: MovieType;
+  movie: Movie | TV;
 }
 
 const Slide: React.FC<Props> = ({ movie }) => {

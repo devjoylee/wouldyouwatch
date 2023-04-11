@@ -33,7 +33,7 @@ const Movies: React.FC<NativeStackScreenProps<any, 'Movies'>> = () => {
     movieAPI.trending
   );
 
-  const movieKeyExtractor = (item: MovieType) => item.id + '';
+  const movieKeyExtractor = (item: Movie) => item.id + '';
 
   const onRefresh = async () => {
     setRefreshing(true);
@@ -51,7 +51,7 @@ const Movies: React.FC<NativeStackScreenProps<any, 'Movies'>> = () => {
       refreshing={refreshing}
       data={upcomingData?.results}
       keyExtractor={movieKeyExtractor}
-      renderItem={({ item }) => <MediaItemVertical movie={item} />}
+      renderItem={({ item }) => <MediaItemVertical item={item} />}
       ListHeaderComponent={
         <>
           <Swiper
@@ -62,7 +62,7 @@ const Movies: React.FC<NativeStackScreenProps<any, 'Movies'>> = () => {
             showsPagination={false}
             containerStyle={{ width: '100%', height: SCREEN_HEIGHT / 3.8 }}
           >
-            {nowPlayingData?.results.map((movie: MovieType) => (
+            {nowPlayingData?.results.map((movie: Movie) => (
               <Slide key={movie.id} movie={movie} />
             ))}
           </Swiper>

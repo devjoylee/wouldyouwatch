@@ -5,23 +5,23 @@ import * as S from './styles';
 
 interface Props {
   title: string;
-  data: MovieType[];
+  data: Movie[] | TV[] | undefined;
   marginBottom?: number;
 }
 
 const MediaListHorizon: React.FC<Props> = ({ title, data, marginBottom }) => {
-  const keyExtractor = (item: MovieType) => item.id + '';
+  const keyExtractor = (item: Movie | TV) => item.id + '';
 
   return (
     <S.ListContainer style={{ marginBottom: marginBottom }}>
       <S.Title>{title}</S.Title>
-      <FlatList
+      <FlatList<Movie | TV>
         horizontal
         data={data}
         keyExtractor={keyExtractor}
         contentContainerStyle={{ paddingHorizontal: 25 }}
         showsHorizontalScrollIndicator={false}
-        renderItem={({ item }) => <MediaItemHorizon movie={item} />}
+        renderItem={({ item }: { item: Movie | TV }) => <MediaItemHorizon item={item} />}
         ItemSeparatorComponent={S.HSeparator}
       />
     </S.ListContainer>

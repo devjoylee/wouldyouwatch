@@ -6,11 +6,11 @@ import Votes from '@components/Votes';
 import * as S from './styles';
 
 interface Props {
-  movie: MovieType;
+  item: Movie | TV;
 }
 
-const MediaItemHorizon: React.FC<Props> = ({ movie }) => {
-  const { poster_path, original_title, original_name, vote_average } = movie;
+const MediaItemHorizon: React.FC<Props> = ({ item }) => {
+  const { poster_path, original_title, original_name, vote_average } = item;
   const title = original_title ?? original_name;
   const navigation = useNavigation();
 

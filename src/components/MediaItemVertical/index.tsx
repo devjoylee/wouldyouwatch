@@ -5,11 +5,11 @@ import Poster from '@components/Poster';
 import * as S from './styles';
 
 interface Props {
-  movie: MovieType;
+  item: Movie;
 }
 
-const MediaItemVertical: React.FC<Props> = ({ movie }) => {
-  const { poster_path, original_title, release_date, overview } = movie;
+const MediaItemVertical: React.FC<Props> = ({ item }) => {
+  const { poster_path, original_title, release_date, overview } = item;
   const navigation = useNavigation();
   const openDetail = () => {
     //@ts-ignore

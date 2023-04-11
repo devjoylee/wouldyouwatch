@@ -1,9 +1,13 @@
-import { QueryFunctionContext } from 'react-query';
+import { QueryFunction } from 'react-query';
 
 const API_KEY = '10923b261ba94d897ac6b81148314a3f';
 const BASE_URL = 'https://api.themoviedb.org/3';
 
-export const movieAPI = {
+interface Fetchers<T> {
+  [key: string]: QueryFunction<T>;
+}
+
+export const movieAPI: Fetchers<MovieResponse> = {
   trending: () =>
     fetch(`${BASE_URL}/trending/movie/week?api_key=${API_KEY}`).then((res) => res.json()),
   upcoming: () =>
@@ -14,7 +18,7 @@ export const movieAPI = {
     fetch(`${BASE_URL}/movie/upcoming?api_key=${API_KEY}&language=en-US&page=1&region=ca`).then(
       (res) => res.json()
     ),
-  search: ({ queryKey }: QueryFunctionContext<[string, string | null | undefined]>) => {
+  search: ({ queryKey }) => {
     const [_, query] = queryKey;
     return fetch(
       `${BASE_URL}/search/movie?api_key=${API_KEY}&language=en-US&page=1&query=${query}`
@@ -22,7 +26,7 @@ export const movieAPI = {
   },
 };
 
-export const tvAPI = {
+export const tvAPI: Fetchers<TvResponse> = {
   trending: () =>
     fetch(`${BASE_URL}/trending/tv/week?api_key=${API_KEY}&language=en-US&page=1`).then((res) =>
       res.json()
@@ -35,7 +39,7 @@ export const tvAPI = {
     fetch(`${BASE_URL}/tv/top_rated?api_key=${API_KEY}&language=en-US&page=1`).then((res) =>
       res.json()
     ),
-  search: ({ queryKey }: QueryFunctionContext<[string, string | null | undefined]>) => {
+  search: ({ queryKey }) => {
     const [_, query] = queryKey;
     return fetch(
       `${BASE_URL}/search/tv?api_key=${API_KEY}&language=en-US&page=1&query=${query}`

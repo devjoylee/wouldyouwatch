@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ScrollView, Text } from 'react-native';
+import { ScrollView } from 'react-native';
 import { useQuery } from 'react-query';
 
 import Loader from '@components/Loader';

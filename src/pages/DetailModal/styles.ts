@@ -26,8 +26,25 @@ export const Title = styled.Text`
   font-weight: 500;
 `;
 
+export const DetailBody = styled.View`
+  padding: 0px 20px 30px;
+  width: 96%;
+`;
+
 export const Overview = styled.Text`
   color: ${({ theme }) => theme.text};
-  margin-top: 20px;
+  margin: 20px 0;
   padding: 0px 20px;
+`;
+
+export const VideoButton = styled.TouchableOpacity`
+  flex-direction: row;
+`;
+
+export const VideoName = styled.Text`
+  color: white;
+  font-weight: 600;
+  margin-bottom: 10px;
+  line-height: 24px;
+  margin-left: 10px;
 `;

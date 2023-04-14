@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Dimensions, FlatList } from 'react-native';
+import { FlatList } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useQuery, useQueryClient } from 'react-query';
 
@@ -10,9 +10,8 @@ import MediaItemVertical from '@components/MediaItemVertical';
 import MediaListHorizon from '@components/MediaListHorizon';
 
 import { movieAPI } from '@utils/api';
+import { DIMENSIONS } from '@styles/index';
 import styled from 'styled-components/native';
-
-const { height: SCREEN_HEIGHT } = Dimensions.get('window');
 
 const Movies: React.FC<NativeStackScreenProps<any, 'Movies'>> = () => {
   const [refreshing, setRefreshing] = useState(false);
@@ -60,7 +59,7 @@ const Movies: React.FC<NativeStackScreenProps<any, 'Movies'>> = () => {
             autoplay
             showsButtons={false}
             showsPagination={false}
-            containerStyle={{ width: '100%', height: SCREEN_HEIGHT / 3.8 }}
+            containerStyle={{ width: '100%', height: DIMENSIONS.SCREEN_HEIGHT / 3.8 }}
           >
             {nowPlayingData?.results.map((movie: Movie) => (
               <Slide key={movie.id} movie={movie} />

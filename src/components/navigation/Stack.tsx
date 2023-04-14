@@ -3,7 +3,7 @@ import { useColorScheme } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import DetailModal from '@pages/DetailModal';
-import { colors } from 'styles/colors';
+import { COLORS } from '@styles/index';
 
 const NativeStack = createNativeStackNavigator();
 
@@ -15,10 +15,10 @@ const Stack = () => {
       screenOptions={{
         headerBackTitleVisible: false,
         headerStyle: {
-          backgroundColor: isDark ? colors.black : 'white',
+          backgroundColor: isDark ? COLORS.BLACK : 'white',
         },
         headerTitleStyle: {
-          color: isDark ? 'white' : colors.black,
+          color: isDark ? 'white' : COLORS.BLACK,
         },
       }}
     >

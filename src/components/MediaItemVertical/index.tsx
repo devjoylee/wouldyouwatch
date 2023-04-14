@@ -13,7 +13,7 @@ const MediaItemVertical: React.FC<Props> = ({ item }) => {
   const navigation = useNavigation();
   const openDetail = () => {
     //@ts-ignore
-    navigation.navigate('Stack', { screen: 'Detail', params: { title: original_title } });
+    navigation.navigate('Stack', { screen: 'Detail', params: { ...item } });
   };
 
   return (

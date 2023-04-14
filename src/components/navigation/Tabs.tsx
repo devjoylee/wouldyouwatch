@@ -3,7 +3,7 @@ import { useColorScheme } from 'react-native';
 import Movies from 'pages/Movies';
 import Search from 'pages/Search';
 import TV from 'pages/TV';
-import { colors } from 'styles/colors';
+import { COLORS } from '@styles/index';
 import { Ionicons } from '@expo/vector-icons';
 
 const Tab = createBottomTabNavigator();
@@ -13,19 +13,19 @@ const Tabs = () => {
 
   return (
     <Tab.Navigator
-      sceneContainerStyle={{ backgroundColor: isDark ? colors.black : '#fff' }}
+      sceneContainerStyle={{ backgroundColor: isDark ? COLORS.BLACK : '#fff' }}
       screenOptions={{
         unmountOnBlur: true,
         tabBarStyle: {
-          backgroundColor: isDark ? colors.black : 'white',
+          backgroundColor: isDark ? COLORS.BLACK : 'white',
         },
-        tabBarActiveTintColor: isDark ? colors.yellow : colors.black,
-        tabBarInactiveTintColor: isDark ? colors.darkGrey : colors.lightGrey,
+        tabBarActiveTintColor: isDark ? COLORS.YELLOW : COLORS.BLACK,
+        tabBarInactiveTintColor: isDark ? COLORS.DARKGREY : COLORS.LIGHTGREY,
         headerStyle: {
-          backgroundColor: isDark ? colors.black : 'white',
+          backgroundColor: isDark ? COLORS.BLACK : 'white',
         },
         headerTitleStyle: {
-          color: isDark ? 'white' : colors.black,
+          color: isDark ? 'white' : COLORS.BLACK,
         },
         tabBarLabelStyle: { fontSize: 12, fontWeight: '600', marginBottom: 3 },
       }}

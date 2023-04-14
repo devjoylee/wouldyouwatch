@@ -16,7 +16,7 @@ const MediaItemHorizon: React.FC<Props> = ({ item }) => {
 
   const openDetail = () => {
     //@ts-ignore
-    navigation.navigate('Stack', { screen: 'Detail', params: { title } });
+    navigation.navigate('Stack', { screen: 'Detail', params: { ...item } });
   };
 
   return (

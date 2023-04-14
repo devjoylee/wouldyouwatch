@@ -28,13 +28,11 @@ export const Title = styled.Text`
 
 export const DetailBody = styled.View`
   padding: 0px 20px 30px;
-  width: 96%;
 `;
 
 export const Overview = styled.Text`
   color: ${({ theme }) => theme.text};
   margin: 20px 0;
-  padding: 0px 20px;
 `;
 
 export const VideoButton = styled.TouchableOpacity`
@@ -47,4 +45,5 @@ export const VideoName = styled.Text`
   margin-bottom: 10px;
   line-height: 24px;
   margin-left: 10px;
+  width: 90%;
 `;

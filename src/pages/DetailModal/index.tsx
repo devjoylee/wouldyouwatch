@@ -3,12 +3,10 @@ import { StyleSheet } from 'react-native';
 import { useQuery } from 'react-query';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
-import Poster from '@components/Poster';
-import Loader from '@components/Loader';
+import { Poster, Loader } from '@components/index';
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
-import { makeImagePath } from '@utils/makeImagePath';
-import { linkToYoutube } from '@utils/linkToYoutube';
+import { linkToYoutube, makeImagePath } from '@utils/index';
 import { movieAPI, tvAPI } from '@utils/api';
 
 import { COLORS } from '@styles/index';

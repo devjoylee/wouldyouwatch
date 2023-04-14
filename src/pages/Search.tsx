@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import { ScrollView } from 'react-native';
 import { useQuery } from 'react-query';
 
-import Loader from '@components/Loader';
-import MediaListHorizon from '@components/MediaListHorizon';
+import { Loader, MediaListHorizon } from '@components/index';
 import { movieAPI, tvAPI } from '@utils/api';
 import styled from 'styled-components/native';
 

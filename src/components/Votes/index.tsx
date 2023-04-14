@@ -5,7 +5,7 @@ interface VotesProps {
   votes: number;
 }
 
-const Votes: React.FC<VotesProps> = ({ votes }) => (
+export const Votes: React.FC<VotesProps> = ({ votes }) => (
   <Text>{votes > 0 ? `⭐️ ${votes}/10` : `Coming soon`}</Text>
 );
 
@@ -14,5 +14,3 @@ const Text = styled.Text`
   font-size: 10px;
   margin-top: 5px;
 `;
-
-export default Votes;

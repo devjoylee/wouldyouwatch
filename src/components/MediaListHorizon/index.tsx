@@ -1,6 +1,6 @@
 import React from 'react';
 import { FlatList } from 'react-native';
-import MediaItemHorizon from '@components/MediaItemHorizon';
+import { MediaItemHorizon } from '@components/index';
 import * as S from './styles';
 
 interface Props {
@@ -9,7 +9,7 @@ interface Props {
   marginBottom?: number;
 }
 
-const MediaListHorizon: React.FC<Props> = ({ title, data, marginBottom }) => {
+export const MediaListHorizon: React.FC<Props> = ({ title, data, marginBottom }) => {
   const keyExtractor = (item: Movie | TV) => item.id + '';
 
   return (
@@ -27,5 +27,3 @@ const MediaListHorizon: React.FC<Props> = ({ title, data, marginBottom }) => {
     </S.ListContainer>
   );
 };
-
-export default MediaListHorizon;

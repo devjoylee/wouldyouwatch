@@ -4,10 +4,7 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useQuery, useQueryClient } from 'react-query';
 
 import Swiper from 'react-native-swiper';
-import Slide from '@components/Slide';
-import Loader from '@components/Loader';
-import MediaItemVertical from '@components/MediaItemVertical';
-import MediaListHorizon from '@components/MediaListHorizon';
+import { Loader, Slide, MediaItemVertical, MediaListHorizon } from '@components/index';
 
 import { movieAPI } from '@utils/api';
 import { DIMENSIONS } from '@styles/index';

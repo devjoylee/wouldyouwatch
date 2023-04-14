@@ -3,8 +3,7 @@ import { RefreshControl, ScrollView } from 'react-native';
 import { QueryClient, useQuery } from 'react-query';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
-import Loader from '@components/Loader';
-import MediaListHorizon from '@components/MediaListHorizon';
+import { Loader, MediaListHorizon } from '@components/index';
 import { tvAPI } from '@utils/api';
 
 const TV: React.FC<NativeStackScreenProps<any, 'TV'>> = () => {

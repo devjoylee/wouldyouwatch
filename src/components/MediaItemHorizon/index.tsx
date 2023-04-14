@@ -1,15 +1,13 @@
 import React from 'react';
 import { useNavigation } from '@react-navigation/native';
-
-import Poster from '@components/Poster';
-import Votes from '@components/Votes';
+import { Poster, Votes } from '@components/index';
 import * as S from './styles';
 
 interface Props {
   item: Movie | TV;
 }
 
-const MediaItemHorizon: React.FC<Props> = ({ item }) => {
+export const MediaItemHorizon: React.FC<Props> = ({ item }) => {
   const { poster_path, original_title, original_name, vote_average } = item;
   const title = original_title ?? original_name;
   const navigation = useNavigation();
@@ -27,5 +25,3 @@ const MediaItemHorizon: React.FC<Props> = ({ item }) => {
     </S.ItemContainer>
   );
 };
-
-export default MediaItemHorizon;

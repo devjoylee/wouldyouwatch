@@ -2,8 +2,7 @@ import React from 'react';
 import { StyleSheet, TouchableWithoutFeedback, useColorScheme } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
-import Poster from '@components/Poster';
-import Votes from '@components/Votes';
+import { Poster, Votes } from '@components/index';
 import { makeImagePath } from '@utils/makeImagePath';
 import { BlurView } from 'expo-blur';
 import * as S from './styles';
@@ -12,13 +11,13 @@ interface Props {
   movie: Movie | TV;
 }
 
-const Slide: React.FC<Props> = ({ movie }) => {
+export const Slide: React.FC<Props> = ({ movie }) => {
   const { backdrop_path, poster_path, original_title, vote_average, overview } = movie;
   const isDark = useColorScheme() === 'dark';
   const navigation = useNavigation();
   const openDetail = () => {
     //@ts-ignore
-    navigation.navigate('Stack', { screen: 'Detail', params: { ...item } });
+    navigation.navigate('Stack', { screen: 'Detail', params: { ...movie } });
   };
 
   return (
@@ -46,5 +45,3 @@ const Slide: React.FC<Props> = ({ movie }) => {
     </TouchableWithoutFeedback>
   );
 };
-
-export default Slide;

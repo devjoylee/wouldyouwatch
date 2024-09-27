@@ -19,3 +19,45 @@ export const getUpcomingMovies = async () => {
     return { success: false, data: error };
   }
 };
+
+export const getNowPlayingMovies = async () => {
+  try {
+    const response = await axios.get(`${Config.baseURL}/now_playing`, {
+      headers: {
+        Authorization: `Bearer ${Config.token}`,
+      },
+    });
+    return { success: true, data: response.data, status: response.status };
+  } catch (error) {
+    console.log(error);
+    return { success: false, data: error };
+  }
+};
+
+export const getPopularMovies = async () => {
+  try {
+    const response = await axios.get(`${Config.baseURL}/popular`, {
+      headers: {
+        Authorization: `Bearer ${Config.token}`,
+      },
+    });
+    return { success: true, data: response.data, status: response.status };
+  } catch (error) {
+    console.log(error);
+    return { success: false, data: error };
+  }
+};
+
+export const getTopRatedMovies = async () => {
+  try {
+    const response = await axios.get(`${Config.baseURL}/top_rated`, {
+      headers: {
+        Authorization: `Bearer ${Config.token}`,
+      },
+    });
+    return { success: true, data: response.data, status: response.status };
+  } catch (error) {
+    console.log(error);
+    return { success: false, data: error };
+  }
+};

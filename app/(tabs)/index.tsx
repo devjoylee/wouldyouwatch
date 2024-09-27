@@ -1,4 +1,4 @@
-import { MovieBanner } from '@/components/MovieBanner';
+import { MovieBanner, MovieBody } from '@/components';
 import { StyleSheet, View, ScrollView } from 'react-native';
 
 export default function HomeScreen() {
@@ -6,6 +6,7 @@ export default function HomeScreen() {
     <View style={styles.container}>
       <ScrollView style={styles.scrollView}>
         <MovieBanner />
+        <MovieBody />
       </ScrollView>
     </View>
   );

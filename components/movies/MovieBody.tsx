@@ -37,7 +37,7 @@ export function MovieBody() {
   return (
     <View style={styles.bodyContainer}>
       <HSlider title='Now Playing' data={nowPlayingMovies} />
-      <HSlider title='Popular Movies' data={popularMovies} />
+      <HSlider title='Popular Movies' data={popularMovies.slice(3)} />
       <HSlider title='Top Rated Movies' data={topRatedMovies} />
     </View>
   );

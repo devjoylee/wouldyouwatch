@@ -1,7 +1,8 @@
-import { FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { FlatList, Image, StyleSheet, TouchableOpacity, View } from 'react-native';
 import React from 'react';
 import { responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions';
 import { Movie } from '@/types';
+import { ThemedText } from './ThemedText';
 
 interface HSliderProps {
   title: string;
@@ -25,7 +26,7 @@ export function HSlider({ title, data }: HSliderProps) {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>{title}</Text>
+      <ThemedText type='subtitle'>{title}</ThemedText>
       <FlatList
         horizontal
         showsHorizontalScrollIndicator={false}
@@ -43,13 +44,6 @@ const styles = StyleSheet.create({
     gap: 15,
     marginTop: 10,
     marginBottom: 30,
-  },
-  title: {
-    color: 'white',
-    fontSize: 17,
-    fontWeight: 'bold',
-    letterSpacing: 0.5,
-    marginBottom: 10,
   },
   movieImg: {
     width: responsiveWidth(50),

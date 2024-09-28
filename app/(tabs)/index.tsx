@@ -1,4 +1,4 @@
-import { MovieBanner, MovieBody } from '@/components';
+import { MovieBanner, MovieBody } from '@/components/movies';
 import { StyleSheet, View, ScrollView } from 'react-native';
 
 export default function HomeScreen() {

@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, View } from 'react-native';
-import { HSlider } from './HSlider';
+
 import { getNowPlayingMovies, getPopularMovies, getTopRatedMovies } from '@/app/_api/endpoint';
+import { HSlider } from '@/components/common';
 import { Movie } from '@/types';
 
 export function MovieBody() {
